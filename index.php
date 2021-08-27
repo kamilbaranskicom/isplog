@@ -144,7 +144,7 @@ if(isset($_GET['grep'])) {
 } else {
   $grep='';  
 };
-$files=glob($dir.'/'.$grep.'*', GLOB_MARK); // scandir($dir);
+$files=glob($dir.'/'.$grep.'*.log', GLOB_MARK); // scandir($dir);
 for($i=0;$i<count($files);$i++) {
   if (substr($files[$i], -1)=='/') {
 //    unset($files[$i]);
