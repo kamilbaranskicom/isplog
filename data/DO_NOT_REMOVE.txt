@@ -1,1 +1,5 @@
 This file is here only to store the data directory to git.
+
+This directory is the default location for storing ping results.
+
+The location might be changed in config.php.
