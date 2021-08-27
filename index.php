@@ -5,6 +5,8 @@
 // (c) Kamil Barański http://kamilbaranski.com/
 // (nie byłoby tego skryptu, gdyby UPC dobrze wykonywało swoją robotę)
 // disclaimer: AS IS. bez gwarancji.
+//
+// NAJPIERW USTAW PARAMETRY (copy config_example.php to config.php!)
 // 
 //
 $wersja='0.7';
@@ -30,25 +32,7 @@ $opiswywolywania=
 
 
 
-
-// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//
-// NAJPIERW USTAW PARAMETRY
-//
-// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-$scriptName='isplog';
-$dir='/var/www/html/'.$scriptName.'/data';				// gdzie mają być pliki?
-$defaultdownload=true;								// plain text [false], czy txt do ściągnięcia (Content-Disposition: attachment) [true]
-$hostarray=array(									// hostarray definiujemy tylko aby na dole pokazać idealny crontab. Może być tu dowolna ilość hostów.
-	'8.8.8.8' => 'google',
-	'213.180.141.140' => 'onet',
-	'192.168.50.254' => 'linksys',
-	'192.168.50.1' => 'upcmodem');
-$pingcount=1;										// ile razy pingować (1-9) - to wykorzystujemy przy sprawdzaniu błędu (sprzed użycia sed)
-// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
+include 'config.php';
 
 
 
