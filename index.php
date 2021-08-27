@@ -1,4 +1,4 @@
-<?
+<?php
 //
 //
 // internet provider log
@@ -7,7 +7,7 @@
 // disclaimer: AS IS. bez gwarancji.
 // 
 //
-$wersja='0.6';
+$wersja='0.7';
 //
 //
 //
@@ -36,7 +36,8 @@ $opiswywolywania=
 // NAJPIERW USTAW PARAMETRY
 //
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-$dir='/share/log/internetproviderlog';				// gdzie mają być pliki?
+$scriptName='isplog';
+$dir='/var/www/html/'.$scriptName.'/data';				// gdzie mają być pliki?
 $defaultdownload=true;								// plain text [false], czy txt do ściągnięcia (Content-Disposition: attachment) [true]
 $hostarray=array(									// hostarray definiujemy tylko aby na dole pokazać idealny crontab. Może być tu dowolna ilość hostów.
 	'8.8.8.8' => 'google',
@@ -134,7 +135,7 @@ if(isset($_GET['dzien'])) {
 </style>
 </head>
 <body>
-<pre><?
+<pre><?php
 
 
 if(isset($_GET['grep'])) {
@@ -210,7 +211,7 @@ echo '</div>';
 
 
 ?>
-<hr /><button onclick="window.getSelection().selectAllChildren(document.getElementById('lista'));">zaznacz całość</button> | <?
+<hr /><button onclick="window.getSelection().selectAllChildren(document.getElementById('lista'));">zaznacz całość</button> | <?php
 
 $niedzialaarray=array_unique($niedzialaarray);
 if (count($niedzialaarray)>0) {
@@ -223,13 +224,13 @@ echo '<hr />';
 $firstpart='';
 $secondpart='';
 foreach ($hostarray as $ip => $hostname) {
-	$firstpart.="* * * * * echo -n `ping -c ".$pingcount." -q ".$ip." | grep transmitted | cut -d ' ' -f4 | sed -e 's/".$pingcount."/./g'` >> ".$dir."/`date +%Y%m%d`".$hostname.chr(13).chr(10);
-	$secondpart.="59 * * * * sleep 40 ; echo >> ".$dir."/`date +%Y%m%d`".$hostname." ; echo -ne `date +%H --date='+1 minute'`: \\\\c >> ".$dir."/`date +%Y%m%d --date='+1 minute'`".$hostname.chr(13).chr(10);
+	$firstpart.="* * * * * echo -n `ping -c ".$pingcount." -q ".$ip." | grep transmitted | cut -d ' ' -f4 | sed -e 's/".$pingcount."/./g'` >> ".$dir."/`date +\%Y\%m\%d`".$hostname.'.log'.chr(13).chr(10);
+	$secondpart.="59 * * * * sleep 40 ; echo >> ".$dir."/`date +\%Y\%m\%d`".$hostname.".log ; echo -ne `date +\%H --date='+1 minute'`: \\\\c >> ".$dir."/`date +\%Y\%m\%d --date='+1 minute'`".$hostname.'.log'.chr(13).chr(10);
 	// (uwaga, \\ jest escape'owany)
 }
 $defaultcron=$firstpart.$secondpart;
 
-$currentcron=`sudo crontab -l | grep internetproviderlog`;
+$currentcron=`sudo crontab -l | grep {$scriptName}`;
 
 //ech.
 $wymiany=array(chr(13).chr(10)=>chr(10),chr(13)=>chr(10));
@@ -242,7 +243,7 @@ if ($currentcron==$defaultcron) {
   echo 'Current cron:'.$lf.$lf.$currentcron.'<hr />'.'Default cron:'.$lf.$lf.$defaultcron;
 };
 
-?><hr />v<?=$wersja;?> &copy; Kamil Barański http://kamilbaranski.com/ 2018-2019 [current time=<?=date('r');?>] // (disclaimer: nie byłoby tego skryptu, gdyby UPC dobrze wykonywało swoją robotę)
+?><hr />v<?=$wersja;?> &copy; Kamil Barański http://kamilbaranski.com/ 2018-2021 [current time=<?=date('r');?>] // (disclaimer: nie byłoby tego skryptu, gdyby UPC dobrze wykonywało swoją robotę)
 </pre>
 </body>
 </html>
